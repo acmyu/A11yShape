@@ -11,7 +11,7 @@ import json
 from os import listdir
 from os.path import isfile, join
 
-import replicate
+#import replicate
 
 load_dotenv()
 
@@ -67,9 +67,10 @@ def desc_gpt4(base64_image):
 
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
     response = response.json()
+    print(response)
     return response['choices'][0]['message']['content']
 
-
+"""
 def desc_blip(base64_image):
     iterator = replicate.run(
         "joehoover/instructblip-vicuna13b:c4c54e3c8c97cd50c2d2fec9be3b6065563ccf7d43787fb99f84151b867178fe",
@@ -92,10 +93,11 @@ def desc_blip(base64_image):
     for text in iterator:
       output = output+text
     return output
+"""
 
 
-
-def run(code, model):
+def run(req, model):
+    code = req['code']
     file = 'model.scad'
     f = open(join(views_folder, file), "w")
     f.write(code)
@@ -115,37 +117,49 @@ def run(code, model):
     Given a set of descriptions about the same 3D object, distill these descriptions into one detailed description such that a blind user could understand it
 
     """
+    
+    angles = [[-1,0,0], [0,-1,0], [0,0,-1], [0,0,1], [1,0,0], [0,1,0]]
 
+    """
     for x in range(-1,2):
         for y in range(-1,2):
             for z in range(-1,2):
                 if x==0 and y==0 and z==0:
                     continue
-                outfile = join(outpath, str(x+1)+str(y+1)+str(z+1)+'.png')
-                #if os.path.exists(outfile):
-                #    continue
+    """
+    for ang in angles:
+        x = ang[0]
+        y = ang[1]
+        z = ang[2]
+        
+        outfile = join(outpath, str(x+1)+str(y+1)+str(z+1)+'.png')
+        #if os.path.exists(outfile):
+        #    continue
 
-                cmd = 'openscad -o '+outfile+' --camera '+str(x)+','+str(y)+','+str(z)+',0,0,0 --viewall --autocenter --imgsize=2048,2048 '+fp
-                print(cmd)
-                os.system(cmd)
-
-
-
-                # Path to your image
-                image_path = outfile #"temp/Bacteriophage/"+str(x+1)+str(y+1)+str(z+1)+'.png'
-                return cmd
-
-                # Getting the base64 string
-                base64_image = encode_image(image_path)
+        cmd = 'openscad -o '+outfile+' --camera '+str(x)+','+str(y)+','+str(z)+',0,0,0 --viewall --autocenter --imgsize=2048,2048 '+fp
+        print(cmd)
+        os.system(cmd)
 
 
-                if model == 'gpt4':
-                    d = desc_gpt4(base64_image)
-                else:
-                    d = desc_blip(base64_image)
-                print(d)
-                desc.append(d)
-                prompt = prompt + d+'\n\n'
+
+        # Path to your image
+        image_path = outfile #"temp/Bacteriophage/"+str(x+1)+str(y+1)+str(z+1)+'.png'
+        #return cmd
+
+        # Getting the base64 string
+        base64_image = encode_image(image_path)
+
+
+        if model == 'gpt4':
+            try:
+                d = desc_gpt4(base64_image)
+            except Exception as e:
+                d = desc_gpt4(base64_image)
+        #else:
+            #d = desc_blip(base64_image)
+        print(d)
+        desc.append(d)
+        prompt = prompt + d+'\n\n'
 
 
     print(desc)
@@ -175,6 +189,15 @@ def run(code, model):
     response = response.json()
     d = response['choices'][0]['message']['content']
     print(d)
-    return json.dumps(d)
+    
+    response = {'description': d}
+    return response
 
 
+testing = """
+    $fn=32;
+    cube();
+    sphere();
+    """
+
+#run(testing, 'gpt4')
