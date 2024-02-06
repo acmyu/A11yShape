@@ -67,7 +67,7 @@ def desc_gpt4(base64_image):
 
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
     response = response.json()
-    print(response)
+    #print(response)
     return response['choices'][0]['message']['content']
 
 """
@@ -103,9 +103,9 @@ def run(req, model):
     f.write(code)
     f.close()
 
-    print(file)
+    #print(file)
 
-    print(model)
+    #print(model)
     fp = join(views_folder, file)
     outpath = join(views_folder, file.rsplit('.', 1)[0])
 
@@ -136,8 +136,8 @@ def run(req, model):
         #if os.path.exists(outfile):
         #    continue
 
-        cmd = 'openscad -o '+outfile+' --camera '+str(x)+','+str(y)+','+str(z)+',0,0,0 --viewall --autocenter --imgsize=2048,2048 '+fp
-        print(cmd)
+        cmd = 'openscad -o '+outfile+' -q --camera '+str(x)+','+str(y)+','+str(z)+',0,0,0 --viewall --autocenter --imgsize=2048,2048 '+fp
+        #print(cmd)
         os.system(cmd)
 
 
@@ -157,12 +157,12 @@ def run(req, model):
                 d = desc_gpt4(base64_image)
         #else:
             #d = desc_blip(base64_image)
-        print(d)
+        #print(d)
         desc.append(d)
         prompt = prompt + d+'\n\n'
 
 
-    print(desc)
+    #print(desc)
 
     headers = {
         "Content-Type": "application/json",
@@ -188,7 +188,7 @@ def run(req, model):
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
     response = response.json()
     d = response['choices'][0]['message']['content']
-    print(d)
+    #print(d)
     
     response = {'description': d}
     return response
