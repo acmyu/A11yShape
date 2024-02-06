@@ -3,6 +3,7 @@
 
 from flask import Flask
 from main import run
+from waitress import serve
 
 app = Flask(__name__)
 
@@ -19,3 +20,5 @@ def code2fab():
     """
     #return testing
     return run(testing, 'gpt4')
+
+serve(app, host='0.0.0.0', port=8880, threads=1)
