@@ -12,7 +12,6 @@ from os import listdir
 from os.path import isfile, join
 
 import replicate
-import gradio as gr
 
 load_dotenv()
 
@@ -52,7 +51,7 @@ def desc_gpt4(base64_image):
             "content": [
               {
                 "type": "text",
-                "text": "Describe the shape of this object in detail"
+                "text": "Describe the shape of this object in detail such that a blind user could understand it"
               },
               {
                 "type": "image_url",
@@ -96,17 +95,24 @@ def desc_blip(base64_image):
 
 
 
-def run(file, model):
+def run(code, model):
+    file = 'model.scad'
+    f = open(join(views_folder, file), "w")
+    f.write(code)
+    f.close()
+
     print(file)
+
     print(model)
-    fp = join(models_folder, file)
+    fp = join(views_folder, file)
     outpath = join(views_folder, file.rsplit('.', 1)[0])
+
     if not os.path.exists(outpath):
         os.makedirs(outpath)
 
     desc = []
     prompt = """
-    Given a set of descriptions about the same 3D object, distill these descriptions into one detailed description
+    Given a set of descriptions about the same 3D object, distill these descriptions into one detailed description such that a blind user could understand it
 
     """
 
@@ -118,17 +124,20 @@ def run(file, model):
                 outfile = join(outpath, str(x+1)+str(y+1)+str(z+1)+'.png')
                 #if os.path.exists(outfile):
                 #    continue
-                
+
                 cmd = 'openscad -o '+outfile+' --camera '+str(x)+','+str(y)+','+str(z)+',0,0,0 --viewall --autocenter --imgsize=2048,2048 '+fp
                 print(cmd)
                 os.system(cmd)
 
 
+
                 # Path to your image
                 image_path = outfile #"temp/Bacteriophage/"+str(x+1)+str(y+1)+str(z+1)+'.png'
+                return cmd
 
                 # Getting the base64 string
                 base64_image = encode_image(image_path)
+
 
                 if model == 'gpt4':
                     d = desc_gpt4(base64_image)
@@ -166,27 +175,6 @@ def run(file, model):
     response = response.json()
     d = response['choices'][0]['message']['content']
     print(d)
-    return d
+    return json.dumps(d)
 
 
-
-demo = gr.Interface(
-    run,
-    [
-        gr.File(),
-        gr.Radio(["gpt4", "blip"], label="Model"),
-    ],
-    "text"
-)
-
-demo.launch()
-
-"""
-demo = gr.Interface(
-    fn=run,
-    inputs=["file"],
-    outputs=["text"],
-)
-
-demo.launch()
-"""
