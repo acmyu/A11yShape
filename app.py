@@ -5,12 +5,12 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/')
-@cross_origin()
+@cross_origin(origin='*')
 def hello_world():
     return 'Hello from Flask1!'
 
 @app.route('/code2fab', methods=['POST'])
-@cross_origin()
+@cross_origin(origin='*')
 def code2fab():
     req = request.json
     #return jsonify(req['code'])
