@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>
-        Code2Fab
+        A11yShape
     </title>
     <script src="https://cdn.tailwindcss.com">
     </script>
@@ -23,6 +23,7 @@
             white-space: pre-wrap;
             overflow-wrap: break-word;
             word-break: break-all;
+            padding: 1rem;
         }
 
         .hidden {
@@ -36,180 +37,183 @@
         pre {
             white-space: pre-wrap;
         }
+
+        h1, h2 {
+            padding-left: 0.5rem;
+        }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
 
-<body class="bg-gray-100 h-screen border border-black">
-    <div class="flex h-3/4">
-        <!-- Main Content -->
-        <div class="flex w-full h-screen border border-black p-1">
-            <!-- Sidebar for Code -->
-            <div class="w-3/5 h-3/4 bg-white border-t border-gray-300 flex flex-col flex flex-col">
-                <div class="flex h-4/5 border border-black p-1">
-                    <!-- Code Editor Area 1 -->
-                    <div class="w-1/2 h-full overflow-auto border border-black p-1">
-                        <!-- Code Editor Toolbar -->
-                        <div
-                            class="bg-white border-b border-gray-300 px-2 py-1 flex justify-between items-center flex-none border border-black p-1">
-                            <div class="flex items-center space-x-1">
-                                <button class="text-gray-600 hover:bg-gray-100 p-1 rounded border border-black p-1"
-                                    id="save-code" tabindex="0">
-                                    <i class="fas fa-save"></i>
-                                </button>
-                                <button class="text-gray-600 hover:bg-gray-100 p-1 rounded border border-black p-1"
-                                    id="refresh-files" tabindex="0">
-                                    <i class="fas fa-sync"></i>
-                                </button>
-                                <button class="text-gray-600 hover:bg-gray-100 p-1 rounded border border-black p-1"
-                                    id="upload-file" tabindex="0">
-                                    <i class="fas fa-upload"></i>
-                                </button>
-                                <input type="file" id="file-input" style="display: none;" accept=".scad">
-                                <select id="file-list"
-                                    class="text-gray-600 hover:bg-gray-100 p-1 rounded border border-black p-1"
-                                    tabindex="0">
-                                    <option>Select a file</option>
-                                </select>
+<body class="bg-white h-screen ">
 
-                            </div>
-                            <div class="flex items-center space-x-1 border border-black p-1">
-                                <button class="text-gray-600 hover:bg-gray-100 p-1 rounded interactive"
-                                    id="generate-model" tabindex="0" data-hover-text="Generate Model here">
-                                    <i class="fas fa-cube"></i>
-                                    Generate Model
-                                </button>
-                            </div>
-                        </div>
-                        <textarea class="p-2 text-sm text-gray-700 font-mono focus:outline-none interactive"
-                            id="openscad-code" placeholder="// Enter OpenSCAD code here..."
-                            style="resize: none; height: calc(55vh - 36px); width: calc(100% - 4px);"
-                            data-hover-text="Enter OpenSCAD code here."></textarea>
-                    </div>
-                    <!-- Area 2 -->
-                    <div class="w-1/2 h-full overflow-auto  border border-black p-1">
-                        <textarea
-                            class="h-full p-2 text-sm text-gray-700 font-mono focus:outline-none interactive border border-black"
-                            id="openscad-code2" placeholder="// The modular structure of the code will appear here..."
-                            style="resize: none; height: 57.5vh; width: calc(100% - 2px);"
-                            data-hover-text="Enter OpenSCAD code here."></textarea>
+    <header>
+        <h1>A11yShape</h1>
+    </header>
+    <!-- Main Content -->
+    <div class="flex w-full height:98vh">
+        <!-- Code Editor area -->
+        <div class="w-1/3 bg-white border-2 border-black m-1 flex-col flex flex-col " tabindex="0"
+            aria-labelledby="editor-heading" role="region">
+            <h1 role="heading" id="editor-heading">Code Editor Panel</h1>
+
+            <div tabindex="0" aria-label="editor-toolbar" role="toolbar">
+                <div class=" border-b border-gray-300 px-2 py-1 flex justify-between items-center flex-none  ">
+                    <div class="flex items-center space-x-1">
+                        <button class="text-gray-600 hover:bg-gray-100 p-1 rounded border border-black" id="upload-file"
+                            tabindex="0" aria-label="Upload OpenSCAD file" aria-controls="file-input">
+                            <i class="fas fa-upload" aria-hidden="true"></i>
+                        </button>
+
+                        <button class="text-gray-600 hover:bg-gray-100 p-1 rounded border border-black" id="save-code"
+                            tabindex="0" aria-label="Save the OpenSCAD code">
+                            <i class="fas fa-save" aria-hidden="true"></i>
+                        </button>
+
+                        <input type="file" id="file-input" style="display: none;" accept=".scad"
+                            aria-label="Open an OpenSCAD file.">
+                            
+                        <button class="text-gray-600 hover:bg-gray-100 p-1 rounded border border-black" id="undo-code"
+                            tabindex="0" aria-label="Undo code changes" disabled>
+                            Undo
+                        </button>
+                        <button class="text-gray-600 hover:bg-gray-100 p-1 rounded border border-black" id="redo-code"
+                            tabindex="0" aria-label="Redo code changes" disabled>
+                            Redo
+                        </button>
+                        <button tabindex="0" aria-label="Generate Model"
+                            class="text-gray-600 hover:bg-gray-100 p-1 rounded interactive border border-black"
+                            id="generate-model">
+                            <!--<i class="fas fa-cube"></i>-->
+                            Generate Model
+                        </button>
+                        
                     </div>
                 </div>
+            </div>
 
-                <!-- Prompt and Code2fab Response Area -->
-                <div class="h-1/5 overflow-auto flex flex-col border border-black p-1">
-                    <div class="h-1/3">
-                        <p class="text-sm text-gray-700 mb-2">Prompt:</p>
+            <h2 role="heading" id="editor-input-heading"> Code Editor Input Area</h2>
+            <textarea tabindex="0" aria-labelledby="editor-input-heading" role="textbox"
+                class="p-2 text-sm text-gray-700 font-mono focus:outline-none interactive" id="openscad-code"
+                placeholder="Enter OpenSCAD code here"
+                style="resize: none; height: calc(70vh - 40px); width: calc(100% - 4px);"
+                data-hover-text="Enter OpenSCAD code here."></textarea>
+                
+            <div tabindex="0" aria-labelledby="status-heading" role="status">
+              <h2 role="heading" id="status-heading"> Errors</h2>
+              <div class="w-full h-1/2 overflow-auto"
+                  id="status-message" style="height: 5vh;">
+                  
+              </div>
+            </div>
+            
+            <h2 role="heading" id="changes-heading"> Code Changes</h2>
+            <ul tabindex="0" class="w-full h-1/2 overflow-auto"
+                id="code-changes" aria-labelledby="changes-heading" role="list" style="height: 12vh;">
+            </ul>
+        </div>
+        <!-- AI Area -->
+        <div class="w-1/3 border-2 border-black m-1 flex-col overflow-auto" tabindex="0"
+            aria-labelledby="ai-panel-heading" role="region">
+            <h1 role="heading" id="ai-panel-heading">AI Assistance Panel</h1>
+            <div class="border border-black" tabindex="0" aria-labelledby="prompt-heading" role="region">
+                <!-- Prompt Area at the top-->
+                <h2 role="heading" id="prompt-heading"> Command:</h2>
+                <div class="h-1/4 mb-1 overflow-auto flex flex-col border border-black mx-1">
+
+                    <div class="h-1/4">
                         <textarea
-                            class="w-full p-2 text-sm text-gray-700 font-mono focus:outline-none interactive border border-black p-1"
-                            id="gpt-input" placeholder="Enter your prompt here..." style="resize: none; height: 38px;"
-                            data-hover-text="Enter prompt here."></textarea>
+                            class="w-full p-2 text-sm text-gray-700 font-mono focus:outline-none interactive bg-gray-100"
+                            id="gpt-input" placeholder="Enter your prompt here" style="resize: none; height: 6vh;"
+                            aria-label="Prompt box" role="textbox"></textarea>
                         <!-- Buttons below the prompt textbox -->
-                        <div class="flex justify-end items-end"><button
-                                class="mt-1 text-black font-bold py-1 px-4 rounded border border-black p-1 "
-                                id="callGPT">
-                                Enter
-                            </button></div>
+                        <button aria-label="Submit prompt"
+                            class="flex justify-end items-end text-black font-bold py-1 px-4 rounded border border-black m-2"
+                            id="callGPT">
+                            Enter
+                        </button>
 
                     </div>
                 </div>
             </div>
-            <!-- Main Viewport and Logs -->
-            <!--                         <button id="toggle-control"
-                            class="bg-grey-800 hover:bg-grey-900 text-black font-bold py-1 px-3 rounded interactive border border-black p-1"
-                            data-hover-text="Control Model">
-                            Change views
-                        </button> -->
-            <div class="w-2/5 h-3/4 flex-col">
-                <!-- Viewport Header -->
-                <div class="flex">
-                    <div class="flex items-center" style="min-height: 40px;">
-                        <div id="statusDisplay" class="bg-grey-800 border-b px-2 py-1 flex justify-between items-center"
-                            style="min-height: 40px; flex-grow: 1;">
-                            <i class="fas fa-exclamation-circle"> <span id="statusText">Status Bar</span></i>
-                        </div>
+            <!-- Response Area at the bottom -->
+            <div class=" mt-2 pt-2 " tabindex="0" aria-labelledby="response-heading" role="status" aria-live="polite">
+                <h2 role="heading" id="response-heading"> A11yShape Response:</h2>
+                <div class="code2fab-container w-full text-sm text-gray-700 font-mono flex-col" style="height: 3/4;">
+                    <!-- GPT response content goes here -->
+                    <div id="code2fab-response"
+                        class="code2fab-content h-full overflow-auto text-gray-500 interactive flex-shrink-0"
+                        data-hover-text="code2fab's response" style="height: 40vh; overflow-y: auto;"><br><br> Model description not yet generated<br>
                     </div>
                 </div>
+            </div>
+            <div id="history-responses-area" class="mt-4 pt-4 border-t border-gray-300 overflow-y: scroll"
+                role="region" aria-label="History" tabindex="0">
+                <h2 role="heading" id="history-heading"> Response History:</h2>
+                <button aria-label="Clear history"
+                    class="flex justify-end items-end text-black font-bold py-1 px-4 rounded border border-black m-2"
+                    id="clearHistory">
+                    Clear
+                </button>
+                <div id="history-responses" style="height: 22vh; overflow-y: auto;"></div>
+            </div>
+        </div>
+        <!-- Rendering Area -->
+        <div class="w-1/3 flex-col border-2 border-black m-1" tabindex="0" aria-labelledby="model-panel-heading"
+            role="region">
+            <h1 role="heading" id="model-panel-heading">Model Panel</h1>
+            <div class="flex-col  m-1" id="col2">
+
+                <div class="w-full h-1/2 overflow-auto" tabindex="0" aria-labelledby="parts-heading"
+                    style="height: calc(50vh - 40px);">
+                    <h2 role="heading" id="parts-heading"> Model parts</h2>
+                    <div class="h-full p-2 text-sm text-gray-700 font-mono focus:outline-none interactive"
+                        id="openscad-code2" placeholder="The modular structure of the code will appear here"
+                        style="resize: none; height: 92%; width: calc(100% - 2px);">
+                        <p>The parts of model will appear here...</p>
+                    </div>
+                </div>
+
                 <!-- Viewport Content -->
-                <div class="flex-grow bg-gray-100 flex border border-black p-1" style="height: calc(75vh - 47px);">
-                    <div class="w-full flex-grow justify-center items-center overflow-auto" style="position: relative;">
+                <div class="flex-grow  flex border border-black" style="height: calc(50vh - 40px);">
+                    <div class="w-full flex-grow justify-center items-center overflow-auto" style="position: relative;"
+                        tabindex="0" aria-labelledby="rendered-heading" role="region">
+                        <h2 role="heading" id="rendered-heading"> Rendered model</h2>
+
                         <!-- Model viewer goes here -->
-                        <img id="modelImage" src="./static/img/logo.png" alt="Model not available" class="max-w-full max-h-full">
+                        <img id="modelImage" src="logo.png" tabindex="0" aria-label="Rendered model"
+                            aria-describedby="code2fab-response" role="img" class="max-w-full" style="max-height: 90%;">
                         <!-- Initially hide the image -->
-                        <div id="placeholder" class="text-left">
-                            <p>Welcome to Code2Fab!</p><br <p>Quick Navigation and Operation Guide using Keyboard
-                            Shortcuts:</p>
-                            <ul>
-                                <li><strong>Code Editing:</strong> <code>&lt;Ctrl+Shift+O&gt;</code> to navigate to the
-                                    code editor.</li>
-                                <li><strong>Model Generation:</strong> <code>&lt;Ctrl+Shift+G&gt;</code> to generate a
-                                    model after editing.</li>
-                                <li><strong>View Switching:</strong> Hold <code>&lt;Shift&gt;</code> and use
-                                    <code>&lt;Left/Right Arrow Keys&gt;</code> to change views.</li>
-                                <li><strong>Save Code:</strong> <code>&lt;Ctrl+Shift+S&gt;</code> to save your current
-                                    code.</li>
-                                <li><strong>Upload Code:</strong> <code>&lt;Ctrl+Shift+U&gt;</code> to upload existing
-                                    code for use.</li>
-                                <li><strong>Version Control:</strong> <code>&lt;Ctrl+Shift+L&gt;</code> to view
-                                    different code versions.</li>
-                                <li><strong>Clear Versions:</strong> <code>&lt;Ctrl+Shift+R&gt;</code> to clear the
-                                    version list.</li>
-                                <li><strong>Inquiry System:</strong> <code>&lt;Ctrl+Shift+P&gt;</code> to navigate to
-                                    the inquiry input area. </li><br>
-                                <li>To interact with the system, use the default keyword like @describe at the beginning
-                                    of the input field to start specific functions, currently support match, describe,
-                                    analysis, improve and create functions. If you enter a command that does not come
-                                    with a keyword or the system does not detect a match, the system will provide an
-                                    answer based on your input.</li>
-                            </ul><br>
-                            <p>Code2Fab aims to enhance your efficiency from code to creation with powerful, intuitive
-                                tools tailored for designers, engineers, and enthusiasts alike.</p>
-                        </div><!-- Placeholder text -->
+
                     </div>
                 </div>
             </div>
         </div>
+
+    </div>
+    </div>
     </div>
 
-    <!-- Response Area at the bottom -->
-    <div class="w-full h-1/4 overflow-auto border-t border-gray-300 p-2 flex flex-col">
-        <div class="border border-black p-1 mt-2 pt-2">
-            <button id="enlarge-icon"
-                class="bg-grey-800 hover:bg-grey-900 text-black font-bold py-1 px-3 rounded interactive flex items-center border border-black p-1">
-                <i class="fas fa-search-plus mr-2"></i>
-                <p class="text-sm text-gray-700 mb-0">Code2fab Response:</p>
-            </button>
-
-            <div class="code2fab-container w-full text-sm text-gray-700 font-mono bg-gray-50 flex-col"
-                style="height: calc(25vh - 65px);">
-                <!-- GPT response content goes here -->
-                <div id="code2fab-response"
-                    class="code2fab-content h-full overflow-auto text-gray-500 interactive flex-shrink-0" tabindex="0"
-                    data-hover-text="Code2fab's response"><br><br> Code2fab's responses will appear here...
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <script src="https://unpkg.com/xregexp/xregexp-all.js"></script>
     <script>
-        const serverUrl = 'http://128.46.81.40:3000'
+        const serverUrl = 'https://livid-memorisingly-lavonne.ngrok-free.dev'; //'http://128.46.81.40:3000';
 
         // Display and update the status
         const statusDisplay = document.getElementById('statusText');
         function updateStatusAndSpeak(text) {
-            speechSynthesis.cancel();
-            statusDisplay.textContent = text;
+            //speechSynthesis.cancel();
+            //statusDisplay.textContent = text;
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.rate = 5;
-            speechSynthesis.speak(utterance);
+            //speechSynthesis.speak(utterance);
         }
 
         const elements = [
             { id: "save-code", key: "Ctrl+Shift+S", text: "Save the OpenSCAD code." },
-            { id: "refresh-files", key: "Ctrl+Shift+R", text: "Clear the file list." },
+            //{ id: "refresh-files", key: "Ctrl+Shift+R", text: "Clear the file list." },
             { id: "upload-file", key: "Ctrl+Shift+U", text: "Upload a new OpenSCAD file." },
-            { id: "file-list", key: "Ctrl+Shift+L", text: "Open the version list." },
+            //{ id: "file-list", key: "Ctrl+Shift+L", text: "Open the version list." },
             { id: "generate-model", key: "Ctrl+Shift+G", text: "Generate a 3D model from the code." },
             { id: "openscad-code", key: "Ctrl+Shift+O", text: "Enter OpenSCAD code here." },
             { id: "gpt-input", key: "Ctrl+Shift+P", text: "Enter your input here." },
@@ -242,25 +246,157 @@
                 });
             }
         });
+        
+        var session_id = new Date().getTime();
 
         const imageBasePath = '/static/img/model/';
         const totalImages = 7; // Assuming images are named from 0.jpg to 6.jpg
         let currentImageIndex = 0;
+
+        var prevCode = '';
+        var parts = [];
+        let currentPart = { index: 0, code: "", offset: 0 };
+        parts.push({
+            id: 0,
+            name: "Model",
+            description: "",
+            children: [],
+            code: "",
+            isModule: false
+        });
+
+        let historyResponses = [];
+        var codeHistory = [""];
+        var historyIndex = 0;
+        var prevPrompt = "";
         
-        async function genImageAndDescribe(index) {
-            const code = document.getElementById('openscad-code').value;
-            const text = document.getElementById('gpt-input').value;
-            const responseContainer = document.getElementById('code2fab-response');
-            responseContainer.innerHTML = '<pre></pre>';
-            const pre = responseContainer.querySelector('pre');
-            console.log("Generating images for code:", code);
+        const dingSound = new Audio("static/ding.wav");
+        const errorSound = new Audio("static/error.wav");
+        const clockSound = new Audio("static/tick.wav");
+        clockSound.loop = true;
+
+        /**function storeAndDisplayHistoryResponse(newResponse) {
+            historyResponses.unshift(newResponse); 
+            const historyContainer = document.getElementById('history-responses'); 
+            const responseElement = document.createElement('pre');
+            responseElement.textContent = newResponse;
+            responseElement.classList.add('mb-2', 'p-2', 'border', 'rounded-md', 'bg-gray-100', 'text-gray-500');
+            responseElement.setAttribute('role', 'history response');  
+            responseElement.setAttribute('tabindex', '0'); 
+            historyContainer.prepend(responseElement);
+        }**/
+
+        async function storeAndDisplayHistoryResponse(newResponse, code) {
+            const id = historyResponses.length;
+            historyResponses.push({"id": id, "response": newResponse, "code": code});
             
+            const historyContainer = document.getElementById('history-responses');
+            historyContainer.innerHTML = "";
+            
+            let start = 0;
+            if (historyResponses.length > 10) {
+              start = historyResponses.length - 10;
+            }
+            for (let i = start; i < historyResponses.length; i++) {
+              const responseButton = document.createElement('button');
+              const responseElement = document.createElement('pre');
+              responseElement.classList.add('mb-2', 'p-2', 'border', 'rounded-md', 'bg-gray-100', 'text-gray-500');
+              responseElement.setAttribute('role', 'history response');
+              responseElement.setAttribute('tabindex', '0');
+              responseElement.setAttribute('data-id', id);
+              responseElement.setAttribute('onclick', "historySelected(event)");
+              responseElement.style["text-align"] = "left";
+              responseButton.prepend(responseElement);
+              historyContainer.prepend(responseButton);
+
+              const formData = new FormData();
+              formData.append('text', historyResponses[i].response);
+              responseElement.textContent = historyResponses[i].response;
+            }
+            
+            
+            //console.log(historyResponses);
+        }
+        
+        function historySelected(e) {
+            
+            var selected = e.target;
+            const id = parseInt(selected.getAttribute("data-id"));
+            if (id < 0 || id >= historyResponses.length) {
+              return;
+            }
+            const hist = historyResponses[id];
+            //console.log(hist);
+            //prevCode = document.getElementById('openscad-code').value;
+            document.getElementById('openscad-code').value = hist.code;
+            document.getElementById('generate-model').click();
+        }
+        
+        function codeChangeSelected(e) {
+            
+            var selected = e.target;
+            if (selected.getAttribute("data-start") == -1) {
+              return;
+            }
+            document.getElementById('openscad-code').focus();
+            document.getElementById('openscad-code').setSelectionRange(parseInt(selected.getAttribute("data-start")), parseInt(selected.getAttribute("data-end")));
+        }
+        
+        function displayChanges(code, changes) {
+          var lineIndex = [0];
+          for(var i=0; i<code.length-1; i++) {
+              if (code[i] === "\n") lineIndex.push(i+1);
+          }
+          lineIndex.push(code.length);
+          
+          var output = "";
+          
+          for(var i=0; i<changes.length; i++) {
+              var lines = "Lines "+changes[i].startLine+" - " + changes[i].endLine + ": ";
+              if (changes[i].startLine == -1) {
+                lines = "";
+              } else if (changes[i].startLine == changes[i].endLine) {
+                lines = "Line "+changes[i].startLine + ": ";
+              }
+              
+              output += "<li aria-labelledby=\"change-" + i + "\"  >"
+                + "<button id=\"change-" + i + "\" onclick=\"codeChangeSelected(event)\" tabindex=\"0\" data-start=\"" + lineIndex[changes[i].startLine] + "\" data-end=\"" + lineIndex[changes[i].endLine+1] + "\" aria-label=\""+changes[i].description+"\" role=\"listitem\" >"+lines + changes[i].description + " </button></li>";
+          }
+          
+          
+          document.getElementById('code-changes').innerHTML = output;
+        }
+
+        async function genImageAndDescribe(index, text) {
+            clockSound.play();
+            var callId = new Date().getTime();
+            var code = document.getElementById('openscad-code').value;
+            console.log(codeHistory);
+            if (prevCode != code && code != codeHistory[historyIndex]) {
+              codeHistory.length = historyIndex+1;
+              codeHistory.push(code);
+              historyIndex++;
+            }
+                        
+            console.log(code);
+            var fullCode = "";
+            if (currentPart.index != 0) {
+                fullCode = code;
+                code = code.slice(0, currentPart.offset) + "#" + code.slice(currentPart.offset);
+                console.log(code);
+            }
+            
+            const statusContainer = document.getElementById('status-message');
+            statusContainer.innerHTML = "";
+            
+            //console.log("Generating images for code:", code);
+
             try {
                 // Generate images from code
-                const generateResponse = await fetch(serverUrl+'/generate-img', {
+                const generateResponse = await fetch(serverUrl + '/generate-img', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ code: code, imageIndex: index})
+                    body: JSON.stringify({ sessionId: session_id, callId: callId, code: code, prevCode: prevCode, fullCode: fullCode, imageIndex: index, text: text })
                 });
 
                 if (!generateResponse.ok) {
@@ -268,22 +404,35 @@
                 }
 
                 const generateData = await generateResponse.json();
-                
+
                 console.log(generateData);
 
                 if (generateData.message && generateData.message === "Images generated successfully") {
                     updateStatusAndSpeak("Images have been successfully generated.");
+
+                    const mode = generateData.mode;
+                    if (mode == "modify" && text != "") {
+                      currentPart = { index: 0, code: "", offset: 0 };
+                    }
+					
+                    if (generateData.changes != '') {
+                      displayChanges(code, JSON.parse(generateData.changes));
+                    }
                     
+
                     const byteCharacters = atob(generateData.image);
                     const byteNumbers = new Array(byteCharacters.length);
                     for (let i = 0; i < byteCharacters.length; i++) {
                         byteNumbers[i] = byteCharacters.charCodeAt(i);
                     }
                     const byteArray = new Uint8Array(byteNumbers);
-                    
+
                     const imageElement = document.getElementById('modelImage');
                     imageElement.src = URL.createObjectURL(new Blob([byteArray], { type: 'image/png' }));
-                        
+
+                    //const instructions = document.getElementById('placeholder');
+                    //instructions.style["display"] = "none";
+
                     //updateImageDisplay(0); // Reset to the first image
 
                     // Now process the model image and send it along with the text and code
@@ -291,73 +440,288 @@
 
                     // Wait for the model image to be updated in the DOM
                     setTimeout(() => {
-                        const code = document.getElementById('openscad-code').value;
-                        const text = document.getElementById('gpt-input').value;
-                        const responseContainer = document.getElementById('code2fab-response');
-                        responseContainer.innerHTML = '<pre></pre>';
-                        const pre = responseContainer.querySelector('pre');
+                        var code = document.getElementById('openscad-code').value;
+                        var fullCode = "";
+                        var partCode = "";
+                        if (currentPart.index != 0) {
+                            fullCode = code.slice(0, currentPart.offset) + "#" + code.slice(currentPart.offset);;
+                            /*for (let i = 0; i < parts.length; i++) {
+                                if (parts[i].id == currentPart.index) {
+                                    partCode = currentPart.code + ";\n" + parts[i].code;
+                                    break;
+                                }
+                            }*/
+                            code = code.slice(0, currentPart.offset) + "!" + code.slice(currentPart.offset);
+                            partCode = code.slice(0, currentPart.offset) + "/* part of the model --> */" + code.slice(currentPart.offset);
+                        }
+                        
                         updateStatusAndSpeak("The system reply is loading...")
 
-                        fetch(serverUrl+'/api/describe', {
+                        var newCode = "";
+                        var newResponse = "";
+
+                        var body = { sessionId: session_id, callId: callId, text: text, code: code, mode: mode, prevCode: prevCode, fullCode: fullCode, partCode: partCode };
+                        if (text != "") {
+                            body["prevCode"] = "";
+                        }
+
+                        fetch(serverUrl + '/api/describe', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({text: text, code: code, image: generateData.image})
+                            body: JSON.stringify(body)
                         })
                             .then(response => {
-                            
+
                                 console.log(response);
                                 const reader = response.body.getReader();
                                 function processStream({ done, value }) {
                                     if (done) {
+                                        
+                                    
                                         console.log('Stream completed');
                                         updateStatusAndSpeak("Please check the system reply.");
+                                        
+                                        
+                                        if (mode == "modify" && text != "") {
+                                            prevCode = document.getElementById('openscad-code').value;
+                                            newCode = newCode.replace("```openscad", "").replace("```", "").trim();
+                                            document.getElementById('openscad-code').value = newCode;
+                                            parseCode(newCode);
+                                            document.getElementById('undo-code').disabled = false;
+                                            document.getElementById('redo-code').disabled = true;
+                                            prevPrompt = text;
+                                            document.getElementById('generate-model').click();
+                                            return;
+                                        }
+                                        
+                                        if (generateData.changes != '') {
+                                          newResponse += "\nCode changes:"
+                                          const changes = JSON.parse(generateData.changes);
+                                          for(var i=0; i<changes.length; i++) {
+                                            var lines = "Lines "+changes[i].startLine+" - " + changes[i].endLine + ": ";
+                                            if (changes[i].startLine == -1) {
+                                              lines = "";
+                                            } else if (changes[i].startLine == changes[i].endLine) {
+                                              lines = "Line "+changes[i].startLine + ": ";
+                                            }
+                                            
+                                            newResponse += "\n"+lines+changes[i].description
+                                          }
+                                        }
+                                        
+                                        const responseContainer = document.getElementById('code2fab-response');
+                                        responseContainer.innerHTML = '';
+                                        const responsePre = document.createElement('pre');
+                                        responseContainer.appendChild(responsePre);
+                                        responseContainer.ariaLabel = "";
+                                        responsePre.textContent = newResponse;
+                                        responseContainer.ariaLabel = newResponse;
+                                        var history = newResponse;
+                                        if (text != "") {
+                                          history = "Prompt: "+text+"\n\n"+history;
+                                        } else if (prevPrompt != "") {
+                                          history = "Prompt: "+prevPrompt+"\n\n"+history;
+                                          prevPrompt = "";
+                                        }
+                                        storeAndDisplayHistoryResponse(history, code);
+                                        
+                                        clockSound.pause();
+                                        clockSound.currentTime = 0;
+                                        dingSound.play();
+                                        
+                                        responseContainer.focus();
                                         return;
                                     }
                                     const chunk = new TextDecoder().decode(value);
-                                    pre.textContent += chunk;
+
+                                    if (mode == "modify") {
+                                        newCode += chunk;
+                                    } else {
+                                        newResponse += chunk;
+                                    }
 
                                     return reader.read().then(processStream);
                                 }
-                                return reader.read().then(processStream);
+                                reader.read().then(processStream);
                                 updateStatusAndSpeak("Please try again.");
+
+
                             })
                             .catch(error => {
                                 console.error('Error:', error);
                                 updateStatusAndSpeak("Please try again.");
+                                clockSound.pause();
+                                errorSound.play();
+                                statusContainer.innerHTML = "Failed to generate a system reply. Please try again";
                             });
+
+                        prevCode = code;
+                        if (fullCode != "") {
+                          prevCode = fullCode;
+                        }
+                        
 
                     }, 1);
 
                 } else {
                     console.error("Failed to generate or retrieve images.");
                     updateStatusAndSpeak("Failed to generate images.");
+                    clockSound.pause();
+                    errorSound.play();
+                    if (generateData.message == "OpenSCAD code error") {
+                      statusContainer.innerHTML = '<pre>'+generateData.error+'<\pre>';
+                    } else {
+                      statusContainer.innerHTML = "Failed to generate a system reply. Please try again";
+                    }
                 }
             } catch (error) {
                 console.error('Error during generation or loading:', error);
                 updateStatusAndSpeak("An error occurred during image generation.");
+                clockSound.pause();
+                errorSound.play();
+                statusContainer.innerHTML = "Failed to generate a system reply. Please try again";
             }
-        
+
         }
 
         document.getElementById('generate-model').addEventListener('click', async function () {
-            
-            await genImageAndDescribe(currentImageIndex);
-            
+            console.log("gen");
+
+            await genImageAndDescribe(currentImageIndex, "");
+
         });
+        
+        document.getElementById('clearHistory').addEventListener('click', async function () {
+            historyResponses = [];
+            document.getElementById('history-responses').innerHTML = '';
+        });
+        
+        document.getElementById('undo-code').addEventListener('click', async function () {
+          console.log(codeHistory);
+          console.log(historyIndex);
+        
+          var code = document.getElementById('openscad-code').value;
+          if (code != codeHistory[historyIndex]) {
+            codeHistory.push(code);
+          } else {
+            historyIndex--;
+          }
+          
+          if (historyIndex == 0) {
+            document.getElementById('undo-code').disabled = true;
+          }
+          document.getElementById('redo-code').disabled = false;
+          
+          document.getElementById('openscad-code').value = codeHistory[historyIndex];
+          prevCode = code;
+          parseCode(codeHistory[historyIndex]);
+          await genImageAndDescribe(currentImageIndex, "");
+        });
+        
+        document.getElementById('redo-code').addEventListener('click', async function () {
+          var code = document.getElementById('openscad-code').value;
+          historyIndex++;
+          var newCode = codeHistory[historyIndex];
+          
+          if (historyIndex == codeHistory.length-1) {
+            document.getElementById('redo-code').disabled = true;
+          }
+          document.getElementById('undo-code').disabled = false;
+          
+          document.getElementById('openscad-code').value = newCode;
+          prevCode = code;
+          parseCode(newCode);
+          await genImageAndDescribe(currentImageIndex, "");
+        });
+
+        document.getElementById('callGPT').addEventListener('click', async function () {
+            const textInput = document.getElementById('gpt-input').value.trim();
+            document.getElementById("gpt-input").value = "";
+            await genImageAndDescribe(currentImageIndex, textInput);
+        });
+
+        document.getElementById("gpt-input").addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                document.getElementById("callGPT").click();
+            }
+        });
+
+        function modelPartSelected(e) {
+            prevCode = "";
+            
+            var selected = e.target;
+            
+            const prevPart = document.getElementById('part-' + currentPart.index);
+            prevPart.style.color = "black";
+            
+            console.log(currentPart);
+
+            selected.style.color = "blue";
+            
+            if (currentPart.index != selected.getAttribute("data-id")) {
+              currentPart.index = selected.getAttribute("data-id");
+              currentPart.code = selected.getAttribute("data-code");
+              currentPart.offset = selected.getAttribute("data-offset");
+              
+              document.getElementById('openscad-code').focus();
+              document.getElementById('openscad-code').setSelectionRange(currentPart.offset, parseInt(currentPart.offset)+currentPart.code.length);
+              document.getElementById('generate-model').click();
+            }
+            console.log(currentPart);
+        }
 
 
         document.addEventListener('keydown', async function (event) {
-            if (event.shiftKey && (event.key === 'ArrowRight' || event.key === 'ArrowLeft')) {
-                if (event.key === 'ArrowRight') {
-                    currentImageIndex = (currentImageIndex + 1) % totalImages; // Increment index and loop back to 0
-                } else if (event.key === 'ArrowLeft') {
+            if (event.shiftKey && event.key.toUpperCase() === 'V') {
+                //if (event.key === 'ArrowRight') {
+                currentImageIndex = (currentImageIndex + 1) % totalImages; // Increment index and loop back to 0
+                /*} else if (event.key === 'ArrowLeft') {
                     currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages; // Decrement index and loop back to 6
-                }
+                }*/
                 //updateImageDisplay(currentImageIndex);
-                await genImageAndDescribe(currentImageIndex);
+                await genImageAndDescribe(currentImageIndex, "");
                 updateStatusAndSpeak(`Viewing image number ${currentImageIndex}.`);
             }
+
+            if (event.altKey && (event.key === '!' || event.key === '@' || event.key === '#')) {
+                var col = '1';
+                if (event.key === '@') {
+                    col = '2';
+                } else if (event.key === '#') {
+                    col = '3';
+                }
+                var column = document.getElementById('col' + col);
+                column.focus();
+            }
+
+            if (event.shiftKey && event.altKey) {
+                if (event.key.toUpperCase() == 'G') {
+                    await genImageAndDescribe(currentImageIndex, "");
+                } else if (event.key.toUpperCase() == 'D') {
+                    var section = document.getElementById('code2fab-response');
+                    section.focus();
+                } else if (event.key.toUpperCase() == 'E') {
+                    var section = document.getElementById('openscad-code');
+                    section.focus();
+                } else if (event.key.toUpperCase() == 'S') {
+                    saveCode();
+                } else if (event.key.toUpperCase() == 'O') {
+                    document.getElementById('file-input').click();
+                    var section = document.getElementById('openscad-code');
+                    section.focus();
+                    prevCode = "";
+                } else if (event.key.toUpperCase() == 'H') {
+                    const instructions = document.getElementById('placeholder');
+                    instructions.style["display"] = "block";
+                    instructions.focus();
+                } else if (event.key.toUpperCase() == 'C') {
+                    var section = document.getElementById('toolbar');
+                    section.focus();
+                }
+            }
         });
+
 
         function updateImageDisplay(index) {
             const imageElement = document.getElementById('modelImage');
@@ -384,8 +748,7 @@
             }
         }
 
-        // Save the code to a file
-        document.getElementById('save-code').addEventListener('click', function () {
+        function saveCode() {
             const code = document.getElementById('openscad-code').value;
             let fileName = prompt("Enter file name (leave blank for automatic naming):");
 
@@ -401,50 +764,24 @@
                 }
             }
 
-            fetch(serverUrl+'/save-code', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ code, fileName })
-            })
-                .then(response => response.text())
-                .then(result => {
-                    console.log(result);
-                    loadFileList();
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Error saving file.');
-                });
-        });
+            const link = document.createElement("a");
+            const content = code;
+            const file = new Blob([content], { type: 'text/plain' });
+            link.href = URL.createObjectURL(file);
+            link.download = fileName;
+            link.click();
+            URL.revokeObjectURL(link.href);
+        }
 
-        // Refresh the file list
-        document.getElementById('refresh-files').addEventListener('click', function () {
-            if (confirm('Are you sure you want to delete all files? This action cannot be undone.')) {
-                const userInput = prompt('Please type "clear" to confirm deletion:');
-                if (userInput === 'clear') {
-                    fetch(serverUrl+'/delete-all-files', {
-                        method: 'POST'
-                    })
-                        .then(response => response.text())
-                        .then(result => {
-                            console.log(result);
-                            loadFileList();
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            alert('Error deleting files.');
-                        });
-                } else {
-                    alert('Deletion cancelled. Incorrect confirmation word.');
-                }
-            }
+        // Save the code to a file
+        document.getElementById('save-code').addEventListener('click', function () {
+            saveCode();
+
         });
 
         // Load code from a file
         function loadCode(fileName) {
-            fetch(serverUrl+`/load-code/${fileName}`)
+            fetch(serverUrl + `/load-code/${fileName}`)
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('openscad-code').value = data.code;
@@ -459,6 +796,12 @@
         // Upload a file
         document.getElementById('upload-file').addEventListener('click', function () {
             document.getElementById('file-input').click();
+            var section = document.getElementById('openscad-code');
+            section.focus();
+            prevCode = "";
+            document.getElementById('undo-code').disabled = false;
+            document.getElementById('redo-code').disabled = true;
+            document.getElementById('code-changes').innerHTML = "";
         });
         document.getElementById('file-input').addEventListener('change', function (event) {
             const file = event.target.files[0];
@@ -466,111 +809,169 @@
             reader.onload = function (e) {
                 document.getElementById('openscad-code').value = e.target.result;
                 console.log(`Uploaded file: ${file.name}`);
+                parseCode(document.getElementById('openscad-code').value);
+                document.getElementById('undo-code').disabled = false;
+                document.getElementById('redo-code').disabled = true;
+                genImageAndDescribe(currentImageIndex, "");
             };
             reader.readAsText(file);
         });
 
-        // Load the file list
-        document.getElementById('file-list').addEventListener('change', function () {
-            const fileName = this.value;
-            if (fileName !== 'Select a file') {
-                fetch(serverUrl+`/load-code/${fileName}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('openscad-code').value = data.code;
-                        console.log(`Loaded code from file: ${fileName}`);
-                    })
-                    .catch(error => {
-                        console.error('Error loading code:', error);
-                        console.error('Error loading file.');
-                    });
+
+
+        function getDisplayTree(root, child, index, level) {
+
+
+            let tree = "<li style=\"padding-left: 10px;\" aria-labelledby=\"part-" + root.id + "\"  >"
+                /*+ "<input type=\"checkbox\" id=\"part-" + root.id + "\" name=\"parts\" value=\"" + root.id + "\" data-offset=\"" + child.start + "\" data-code=\"" + child.code + "\"  aria-labelledby=\"part-" + root.id + "-label\" role=\"checkbox\" tabindex=\"-1\" onchange=\"modelPartSelected(event)\">"*/
+                + "<button id=\"part-" + root.id + "\" onclick=\"modelPartSelected(event)\" tabindex=\"0\" data-id=\"" + root.id + "\" data-offset=\"" + child.start + "\" data-code=\"" + child.code + "\" aria-label=\"level "+level+" "+child.name+"\" aria-level=\""+level+"\" role=\"listitem\" > Level "+level+" " + child.name + " </button>";
+
+            if (root.id == -1 || root.children.length == 0) {
+                return tree + "</li>";
             }
-        });
+            const children = root.children;
 
-        function loadFileList() {
-            fetch(serverUrl+'/get-files')
-                .then(response => response.json())
-                .then(files => {
-                    const fileList = document.getElementById('file-list');
-                    fileList.innerHTML = '<option>Select a file</option>';
-                    files.forEach(file => {
-                        const option = document.createElement('option');
-                        option.value = file;
-                        option.textContent = file;
-                        fileList.appendChild(option);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching file list:', error);
-                    console.error('Error loading file list.');
-                });
+            tree = tree + "<ul style=\"padding-left: 10px;\" role=\"list\">";
+            for (let i = 0; i < children.length; i++) {
+                tree = tree + getDisplayTree(parts[children[i].id], children[i], index + (i + 1) + ".", level+1);
+            }
+            tree = tree + "</ul></li>";
+            return tree;
         }
-        loadFileList();
 
+        function findModule(name) {
+            for (let i = 0; i < parts.length; i++) {
+                if (parts[i].name == name) {
+                    return i;
+                }
+            }
+            return -1;
+        }
 
+        const primitives = ["circle", "square", "polygon", "text", "import", "projection", "sphere", "cube", "cylinder", "polyhedron", "linear_extrude", "rotate_extrude", "surface"];
+        function getChildren(code, offset, fullcode) {
+            let call_regexp = /\b(\w+)\s*\(([^)]*)\)\s*;/g;
+            let calls = [...code.matchAll(call_regexp)];
 
-        document.getElementById('callGPT').addEventListener('click', function () {
-            const textInput = document.getElementById('gpt-input').value.trim();
-            let apiUrl = '/api/callGPT';
-            let command = '';
+            let children = [];
+            calls.forEach((match) => {
+                let call = match[1] + "(" + match[2] + ")";
+                let moduleId = findModule(match[1]);
+                let primId = primitives.indexOf(match[1]);
+                if (moduleId != -1) {
+                    children.push({
+                        id: parts[moduleId].id,
+                        name: match[1],
+                        code: call,
+                        start: offset + match.index,
+                    });
+                }
 
-            const commandMap = {
-                '@create': '/api/create',
-                '@describe': '/api/describe',
-                '@match': '/api/match',
-                '@analysis': '/api/analysis',
-                '@improve': '/api/improve'
-            };
+            });
 
-            for (let cmd in commandMap) {
-                if (textInput.startsWith(cmd)) {
-                    apiUrl = commandMap[cmd];
-                    command = textInput.slice(cmd.length).trim();
-                    break;
+            let names = [];
+            for (let i = 0; i < children.length; i++) {
+                names.push(children[i].name);
+            }
+            for (let i = 0; i < children.length; i++) {
+                for (let j = 0; j < names.length; j++) {
+                    if (i != j && children[i].name == names[j]) {
+                        children[i].name = children[i].code;
+                        break;
+                    }
                 }
             }
 
-            if (command === '') {
-                command = textInput;
-            }
+            return children;
+        }
 
-            const code = document.getElementById('openscad-code').value;
-            const responseContainer = document.getElementById('code2fab-response');
-            responseContainer.innerHTML = '<pre></pre>';
-            const pre = responseContainer.querySelector('pre');
-            updateStatusAndSpeak("The system reply is loading...");
-
-            html2canvas(document.getElementById('modelImage')).then(canvas => {
-                canvas.toBlob(blob => {
-                    const formData = new FormData();
-                    formData.append('image', blob, 'temp.jpg');
-                    formData.append('text', command);
-                    formData.append('code', code);
-
-                    fetch(serverUrl+apiUrl, {
-                        method: 'POST',
-                        body: formData
-                    })
-                        .then(response => response.body.getReader())
-                        .then(reader => {
-                            function processStream({ done, value }) {
-                                if (done) {
-                                    console.log('Stream completed');
-                                    updateStatusAndSpeak("Please check the system reply.");
-                                    return;
-                                }
-                                const chunk = new TextDecoder().decode(value);
-                                pre.textContent += chunk;
-                                return reader.read().then(processStream);
-                            }
-                            return reader.read().then(processStream);
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            updateStatusAndSpeak("Please try again.");
-                        });
-                });
+        function parseCode(code) {
+            parts = [];
+            currentPart = { index: 0, code: "", offset: 0 };
+            parts.push({
+                id: 0,
+                name: "Full Model",
+                description: "",
+                children: [],
+                code: "",
+                start: 0,
+                isModule: false
             });
+
+            var globalCode = [];
+
+            let def_regexp = /\bmodule\s+(\w+)\s*\(([^)]*)\)\s*{/g;
+            let definitions = [...code.matchAll(def_regexp)];
+
+            var id = 1;
+            var prevModuleEnd = 0;
+            definitions.forEach((match) => {
+                let offset = code.substring(match.index);
+                let body = XRegExp.matchRecursive(offset, '\\{', '\\}')[0];
+
+                parts.push({
+                    id: id,
+                    name: match[1],
+                    description: "",
+                    children: [],
+                    code: match[0] + body + "}",
+                    start: match.index,
+                    isModule: true
+                });
+
+
+
+                globalCode.push({ start: prevModuleEnd, code: code.slice(prevModuleEnd, match.index) });
+
+                prevModuleEnd = match.index + match[0].length + body.length + 1;
+                id++;
+            });
+            
+            globalCode.push({ start: prevModuleEnd, code: code.slice(prevModuleEnd) });
+            
+            
+            for (let i = 0; i < primitives.length; i++) {
+                parts.push({
+                    id: parts.length,
+                    name: primitives[i],
+                    description: "",
+                    children: [],
+                    code: "",
+                    start: -1,
+                    isModule: false
+                });
+            }
+            
+
+            globalCode.forEach((section) => {
+                parts[0].children = parts[0].children.concat(getChildren(section.code, section.start, code));
+            });
+
+            parts.forEach((part) => {
+                if (part.id != 0) {
+                    part.children = getChildren(part.code, part.start, code);
+                }
+            });
+
+            console.log(parts);
+
+            // generate display tree
+            var tree = getDisplayTree(parts[0], parts[0], "", 1);
+            document.getElementById('openscad-code2').innerHTML = "<ul id=\"parts-tree\" aria-label=\"Parts of the model\" role=\"list\">" + tree + "</ul>";
+            const curPart = document.getElementById('part-' + currentPart.index);
+            curPart.checked = true;
+            parts[0].code = code;
+
+        }
+
+        // on code change
+        document.getElementById('openscad-code').addEventListener('change', function () {
+            var code = document.getElementById('openscad-code').value;
+            parseCode(code);
+            
+            document.getElementById('undo-code').disabled = false;
+            document.getElementById('redo-code').disabled = true;
+
         });
     </script>
 

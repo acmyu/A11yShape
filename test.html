@@ -1,0 +1,27 @@
+<div class="w-full h-1/2 overflow-auto" tabindex="0" aria-labelledby="parts-heading">
+    <h2 id="parts-heading">Model parts</h2>
+    <div class="h-full p-2 text-sm text-gray-700 font-mono focus:outline-none interactive" id="openscad-code2" style="resize: none; height: screen; width: calc(100% - 2px);">
+        <ul id="parts-tree" tabindex="0" aria-label="Parts of the model" role="tree">
+            <li role="treeitem" aria-expanded="true" aria-labelledby="part-0-label" aria-level="1">
+                <label for="part-0" id="part-0-label">Full Model</label>
+                <input type="checkbox" id="part-0" name="parts" value="0" aria-labelledby="part-0-label" role="checkbox" tabindex="0" onchange="modelPartSelected(event)">
+                <ul role="group" aria-labelledby="part-0-label">
+                    <li role="treeitem" aria-expanded="true" aria-labelledby="part-1-label" aria-level="2">
+                        <label for="part-1" id="part-1-label">printable_phage</label>
+                        <input type="checkbox" id="part-1" name="parts" value="1" aria-labelledby="part-1-label" role="checkbox" tabindex="0" onchange="modelPartSelected(event)">
+                        <ul role="group" aria-labelledby="part-1-label">
+                            <li role="treeitem" aria-labelledby="part-2-label" aria-level="3">
+                                <label for="part-2" id="part-2-label">cube</label>
+                                <input type="checkbox" id="part-2" name="parts" value="2" aria-labelledby="part-2-label" role="checkbox" tabindex="0" onchange="modelPartSelected(event)">
+                            </li>
+                            <li role="treeitem" aria-labelledby="part-3-label" aria-level="3">
+                                <label for="part-3" id="part-3-label">bacteriophage</label>
+                                <input type="checkbox" id="part-3" name="parts" value="3" aria-labelledby="part-3-label" role="checkbox" tabindex="0" onchange="modelPartSelected(event)">
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

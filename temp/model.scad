@@ -1,5 +1,1 @@
-
-    $fn=32;
-    cube();
-    sphere();
-    
+$fn=32; sphere();
